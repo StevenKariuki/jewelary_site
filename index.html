@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>JEWELLERY SHOP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Courier New">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Roboto", sans-serif
+  }
+
+  /* Button */
+  #button {
+    position: relative;
+    border: none;
+    font-size: 16px;
+    padding: 5px;
+    width: 300px;
+    text-align: left;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  #button:after {
+    content: "";
+    background: #97eeeb;
+    display: block;
+    position: absolute;
+    padding-top: 100%;
+    padding-left: 100%;
+    margin-left: -20px !important;
+    margin-top: -200px;
+    opacity: 0;
+    transition: all 0.8s
+  }
+
+  #button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }
+
+  /* Chat Popup Button*/
+  .open-button {
+    background-color: #e1f6ff;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: 1px solid #0079ac;
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+  }
+
+  /* The popup chat - hidden by default */
+  .chat-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+  }
+
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 320px;
+    padding: 10px;
+    background-color: rgb(234, 250, 253);
+  }
+
+  /* Full-width textarea */
+  .form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: none;
+    background: #ffffff;
+    resize: none;
+    min-height: 200px;
+
+      {
+      box-sizing: border-box
+    }
+
+    ;
+  }
+
+  /* When the textarea gets focus, do something */
+  .form-container textarea:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  /* Set a style for the submit/send button */
+  .form-container .btn {
+    background-color: #0494aa;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  /* Add a red background color to the cancel button */
+  .form-container .cancel {
+    background-color: rgb(58, 58, 58);
+  }
+
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover,
+  .open-button:hover {
+    opacity: 1;
+  }
+
+  /* Searching Bar */
+  input[type=text] {
+    width: 200px;
+    box-sizing: border-box;
+    border: 1px solid rgb(222, 237, 242);
+    border-radius: 5px;
+    font-size: 12px;
+    background-color: rgba(2, 9, 255, 0.1);
+    background-image: url('searchicon.png');
+    background-position: 0px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 12px 12px 20px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    margin-top: 0px;
+  }
+
+  input[type=text]:focus {
+    width: 100%;
+    border: 1px solid rgb(222, 237, 242);
+  }
+
+  /*Progress scroll*/
+  body {
+    font-family: "Roboto", sans-serif;
+    line-height: 1.5;
+    min-height: 300vh;
+    margin: 20px;
+    font-size: clamp(0.8rem, 0.8rem + 0.8vw, 1rem);
+    color: #B22222;
+  }
+
+  .photogrid {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: clamp(1.2rem, 2.2vw, 5.2rem);
+  }
+
+  .progress {
+    height: 1rem;
+    background: blue;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform-origin: 0 50%;
+    animation: scaleProgress auto linear forwards, colorChange auto linear forwards;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes scaleProgress {
+    0% {
+      transform: scaleX(0);
+    }
+
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes colorChange {
+    0% {
+      background-color: red;
+    }
+
+    50% {
+      background-color: yellow;
+    }
+
+    100% {
+      background-color: lime;
+    }
+  }
+
+  /*  Scroll back to top */
+  #backButton {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 120px;
+    z-index: 99;
+    font-size: 10px;
+    border: none;
+    outline: none;
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  #backButton:hover {
+    background-color: #555;
+  }
+</style>
+</head>
+
+<body class="w3-white w3-content" style="max-width:1600px">
+
+  <!-- Sidebar/menu -->
+  <nav class="w3-sidebar w3-collapse w3-blue-gray w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <div class="w3-container">
+      <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-white" title="close menu">
+        <i class="fa fa-remove"></i>
+      </a>
+      <img src="images/logo.jpg" style="width:80%;" class="w3-round-xlarge w3-center"><br><br>
+      <h2 class="font-effect-shadow-multiple"><b>Adorn and grace accessories and jewelry</b></h2>
+
+    </div>
+    <div class="w3-bar-block w3-margin-top">
+      <a href="#portfolio" id="button" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-black"><i class="fa fa-th-large fa-fw w3-margin-right" style="font-size:18px;color:rgb(1, 35, 33)"></i>HOME </a>
+      <a href="#about" id="button" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-black"><i class="fa fa-user fa-fw w3-margin-right" style="font-size:18px;color:rgb(1, 35, 33)"></i>ABOUT</a>
+      <a href="#contact" id="button" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-black"><i class="fa fa-envelope fa-fw w3-margin-right" style="font-size:18px;color:rgb(1, 35, 33)"></i>CONTACT</a>
+      <a href="#" id="button" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-black"><i class="fa fa-envelope fa-fw w3-margin-right" style="font-size:18px;color:rgb(1, 35, 33)"></i>GALLERY</a>
+    </div>
+    <div class="w3-panel w3-large w3-margin-top w3-padding-large">
+      <i class="fa fa-github w3-blue-grey w3-hover-opacity w3-animate-zoom"></i>
+      <i class="fa fa-linkedin w3-blue-grey w3-hover-opacity w3-animate-zoom"></i>
+      <i class="fa fa-facebook-official w3-blue-grey w3-hover-opacity w3-animate-zoom"></i>
+      <i class="fa fa-instagram w3-blue-grey w3-hover-opacity w3-animate-zoom"></i>
+      <i class="fa fa-pinterest-p w3-blue-grey w3-hover-opacity w3-animate-zoom"></i>
+      <i class="fa fa-twitter w3-blue-grey w3-hover-opacity w3-animate-zoom"></i>
+
+    </div>
+  </nav>
+
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main" style="margin-left:300px">
+
+    <!-- Header -->
+    <header id="portfolio">
+      <a href="#about"><img src="image/jew2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+      <div class="w3-container w3-animate-opacity">
+        <h1 class="font-effect-shadow-multiple w3-margin-top"><b>Adorn and grace accessories and jewelry </b></h1>
+
+        <input class="w3-container w3-left " type="text" name="search" placeholder="Search.." id="input">
+
+        
+      </div>
+    </header>
+
+    <div class="progress"></div>
+    <div class="photogrid">
+      <!-- First Photo Grid-->
+      <div class="w3-row-padding w3-animate-opacity">
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="WorkAround Explorer" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> one</b></p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, numquam?.</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container w3-margin-bottom">
+          <img src="image/jew1.jpg" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> two</b></p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, modi!</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container">
+          <img src="image/jew1.jpg" alt="Animal Fun Facts" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Photo Grid-->
+      <div class="w3-row-padding w3-animate-opacity">
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="Kelvin Weather Focast" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="Dog Years Calculator" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="Magic Eight Ball" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Third Photo Grid-->
+      <div class="w3-row-padding w3-animate-opacity">
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="Race Day" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="Rock, Paper and Scissors" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container w3-col">
+          <img src="image/jew1.jpg" alt="Sleep Debt Calculator" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fourth Photo Grid-->
+      <div class="w3-row-padding w3-animate-opacity">
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="Number Guesses" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container w3-margin-bottom w3-col">
+          <img src="image/jew1.jpg" alt="Secret Message" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container w3-col">
+          <img src="image/jew1.jpg" alt="Whale Talk" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-light-grey w3-opacity-min w3-hover-opacity-off">
+            <p><b> three</b></p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, consequuntur?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popup Chat Window -->
+
+    <button class="open-button w3-animate-right w3-padding" onclick="openForm()"><img src="https://i.pinimg.com/originals/2f/99/3e/2f993eb7ef2d5a47e93c20a838f7e38d.gif" class="w3-circle w3-center" style="width: 20%;margin-right: 20px;">CHAT ME!</button></img>
+
+    <div class="chat-popup w3-animate-zoom" id="myForm">
+      <form action="/action_page.php" class="form-container">
+        <img></img>
+        <h3>How can I help you?</h3>
+
+        <label for="msg"><b>Your question</b></label>
+        <textarea placeholder="Type here.." name="msg" required></textarea>
+
+        <button type="submit" class="btn">Send!</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close!</button>
+      </form>
+    </div>
+
+    <!-- Pagination -->
+    <div class="w3-center w3-padding-large">
+      <div class="w3-bar">
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
+        <a href="index.html" class="w3-bar-item w3-black w3-button">1</a>
+        <a href="2ndPage.html" class="w3-bar-item w3-button w3-hover-black">2</a>
+        <a href="3rdPage.html" class="w3-bar-item w3-button w3-hover-black">3</a>
+        <a href="4thPage.html" class="w3-bar-item w3-button w3-hover-black">4</a>
+        <a href="5thPage.html" class="w3-bar-item w3-button w3-hover-black">5</a>
+        <a href="2ndPage.html" class="w3-bar-item w3-button w3-hover-black">»</a>
+      </div>
+    </div>
+
+    <!-- Images of Me -->
+    <div class="w3-padding-large w3-animate-opacity" id="about">
+      <div class="w3-col m6 w3-opacity w3-hover-opacity-off">
+        <img src="image/jew2.jpg"alt="Me" style="width:100%">
+      </div>
+      <div class="w3-col m6 w3-opacity w3-hover-opacity-off">
+        <img src="image/jew2.ipg" alt="Me" style="width:100%">
+      </div>
+    </div>
+
+    <div class="w3-container w3-padding-large" style="margin-top:32px margin-bottom:64px">
+      <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align w3-black w3-text-white w3-padding-large"><b>
+          ABOUT US</b></button>
+
+      <div>
+        <img src="https://assets.codepen.io/10602517/download.gif" alt="Download" width="10%" height="7%" class="w3-container w3-padding-32"><b><a href="https://codepen.io/Nalini1998/live/qBQLYWV" download> DOWNLOAD RESUME </a></b></img>
+      </div>
+
+
+      <!-- Contact Section -->
+
+      <div class="w3-light-grey w3-animate-opacity w3-padding">
+        <h3 id="contact"><b>CONTACT US</b></h3>
+
+        <div class="w3-center w3-padding" style="margin:0">
+          <div class="w3-third w3-dark-grey w3-hover-opacity w3-padding-64">
+            <p><i class="glyphicon glyphicon-envelope w3-xxlarge w3-text-light-grey w3-padding" style="font-size:18px;color:rgb(1, 26, 76)"></i></p>
+            <p>gladys@gmail.com</p>
+          </div>
+          <div class="w3-third w3-blue-grey w3-hover-opacity w3-padding-64">
+            <p><i class="glyphicon glyphicon-move w3-xxlarge w3-text-light-grey w3-padding" style="font-size:18px;color:rgb(1, 26, 76)"></i></p>
+            <p>Gladys</p>
+          </div>
+          <div class="w3-third w3-dark-grey w3-hover-opacity w3-padding-64">
+            <p><i class="glyphicon glyphicon-phone w3-xxlarge w3-text-light-grey w3-padding" style="font-size:18px;color:rgb(1, 26, 76)"></i></p>
+            <p>(+254) ** *** ***</p>
+          </div>
+        </div>
+        <br>
+        <form action="/action_page.php" target="_blank" class="w3-padding w3-animate-opacity">
+          <div class="w3-section">
+            <label>Your Name</label>
+            <input class="w3-input w3-border" type="text" name="Name" placeholder="name" required>
+          </div>
+          <div class="w3-section">
+            <label>Your Email</label>
+            <input class="w3-input w3-border" type="text" name="Email" placeholder="someone@gmail.com" required>
+          </div>
+          <div class="w3-section">
+            <label>Your Message</label>
+            <input class="w3-input w3-border" type="text" name="Message" placeholder="I would like to ..." required>
+          </div>
+          <button type="submit" class="w3-margin-bottom w3-button w3-black"><i class="glyphicon glyphicon-envelope" style="font-size:18px;color:rgb(239, 244, 255)"></i> Send Message</button>
+        </form>
+      </div>
+
+      <!-- Footer -->
+
+      <footer class="w3-container w3-padding w3-light-grey">
+        <div class="w3-row-padding">
+          <div class="w3-third">
+            <h3>ALL IN ALL</h3>
+            <p></p>
+            <p>Powered by <a href="https://github.com/Nalini1998" w3-hover-white target="_blank">@Vibrant</a></p>
+          </div>
+
+          <div class="w3-third">
+            <h3>ARTICLES</h3>
+            <ul class="w3-ul w3-hoverable">
+              <li class="w3-padding-16">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQndX_AkjQovh03QEx1y0HnMuACqSVYtfjsuSiBEyziYyW5Tg_47YODd7y22JpUC0u8GuE&usqp=CAU" class="w3-left w3-margin-right" style="width:50px">
+                <span class="w3-large">Christian Greetings</span><br>
+                <span>13 Jul 2023</span>
+              </li>
+              <li class="w3-padding-16">
+                <img src="https://is5-ssl.mzstatic.com/image/thumb/Purple114/v4/46/0e/9b/460e9b4d-c2a2-d6b5-ad00-d71371394a58/AppIcon-0-0-1x_U007emarketing-0-0-0-5-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/512x512bb.jpg" class="w3-left w3-margin-right" style="width:50px">
+                <span class="w3-large">Events</span><br>
+                <span>15 Jul 2023</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- <div class="w3-third">
+            <h3>POPULAR TAGS</h3>
+            <p>
+              <span class="w3-tag w3-black w3-margin-bottom w3-hover-white">Programming</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Developer</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Vietnam</span>
+              <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Python</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">JavaScript</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">DIY</span>
+              <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Ideas</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Motivation</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Technology</span>
+              <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">News</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Styles</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom  w3-hover-white">Back-end</span>
+              <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Website</span> <span class="w3-tag w3-gray w3-small w3-margin-bottom w3-hover-white">Games</span>
+            </p>
+          </div> -->
+        </div>
+      </footer>
+
+      <div class="w3-light-grey w3-center w3-padding-32 w3-margin-bottom">Powered by <a href="https://github.com/Nalini1998" title="@Meow.Nalini98" target="_blank" class="w3-hover-white">@Vibrant</a></div>
+    </div>
+    <button onclick="topFunction()" id="backButton" title="Go to top">Top</button>
+  </div>
+  <!-- End page content -->
+
+  <script>
+    // Script to open and close sidebar
+    function w3_open() {
+      document.getElementById("mySidebar").style.display = "block";
+      document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function w3_close() {
+      document.getElementById("mySidebar").style.display = "none";
+      document.getElementById("myOverlay").style.display = "none";
+    }
+    // Details information of About me
+    function myFunction(id) {
+      var x = document.getElementById(id);
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+    // Chat Popup 
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+    // Get the back to top button
+    let myButton = document.getElementById('backButton')
+    window.onscroll = function() {
+      scrollFunction()
+    };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        myButton.style.display = 'block';
+      } else {
+        myButton.style.display = 'none';
+      }
+    }
+
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+
+</body>
+
+</html>
